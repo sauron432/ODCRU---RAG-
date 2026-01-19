@@ -4,3 +4,4 @@ ollama
 langchain_text_splitters
 sklearn
 chromadb
+langchain

@@ -4,6 +4,8 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 from src.config import *
 
+# df_path = "../data/airlines_reviews.csv"
+# text_column = "Reviews"
 def create_chunks(df_path, text_column):
     print("------ Creating chunks ------")
     all_chunks = []
@@ -14,19 +16,18 @@ def create_chunks(df_path, text_column):
         raise ValueError(f"Column '{text_column}' not found in DataFrame. Available columns: {list(df.columns)}")
     
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size = CHUNK_SIZE,
-        chunk_overlap = OVERLAP_SIZE)
+        chunk_size = 500,
+        chunk_overlap = 100)
     # reviews = df[text_column]
     # print(reviews)
     for _, row in df.iterrows():
-        review = row[COLUMN_NAME]
-        airline = row[AIRLINE]
-        chunks.extend(text_splitter.split_text(review))
+        review = row[text_column]
+        airline = row['Airline']
+        chunks = text_splitter.split_text(review)
         for chunk in chunks:
             all_chunks.append({
                 "text":chunk,
                 "airline":airline
             })
-    # print(f"Total chunks: {len(all_chunks)}")
-    all_chunks = all_chunks[:50]
-    return all_chunks
+    print(f"Total chunks: {len(all_chunks)}")
+    return all_chunks[:1875]
