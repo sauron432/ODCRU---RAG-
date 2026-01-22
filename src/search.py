@@ -7,8 +7,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 def search(query, collection, threshold = 0.8):
     default_message = "The query provided is out of context of my knowledge base. I don't have enough information to answer this."    
     try:
-        print("------ Generating Response ------") 
         query_embedding = ollama.embeddings(model="mxbai-embed-large", prompt=query)["embedding"]
+        print("------ Generating Response ------") 
         
     except Exception as e:
         print(f"Errpr embedding query: {e}")
