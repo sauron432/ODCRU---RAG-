@@ -1,8 +1,6 @@
 import ollama
 import numpy as np
 from typing import List
-from sklearn.metrics.pairwise import cosine_similarity
-
 
 def search(query, collection, threshold = 0.8):
     default_message = "The query provided is out of context of my knowledge base. I don't have enough information to answer this."    
@@ -32,7 +30,7 @@ def search(query, collection, threshold = 0.8):
     if best_response["score"] > threshold:
         return default_message
     
-    return best_response["text"]
+    return best_response
     # return threshold
     # return f" Answer:{all_chunks[best_index]['text']} \n Airline: {all_chunks[best_index]['airline']} \n Score: {float(cos[best_index])} " 
 
