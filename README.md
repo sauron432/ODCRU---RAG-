@@ -18,6 +18,8 @@ A Retrieval-Augmented Generation (RAG) chatbot that answers user questions from 
 ```
 project-root/
 │
+├── notebook/
+│   └── notebook.ipynb         # Notebook file for testing
 ├── src/
 │   ├── __init__.py            # Recognizes src as package 
 │   ├── search.py              # Vector search logic
