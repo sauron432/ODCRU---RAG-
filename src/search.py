@@ -3,7 +3,7 @@ import numpy as np
 from typing import List
 
 def search(query, collection, threshold = 0.8):
-    default_message = "The query provided is out of context of my knowledge base. I don't have enough information to answer this."    
+    # default_message = "The query provided is out of context of my knowledge base. I don't have enough information to answer this."    
     try:
         query_embedding = ollama.embeddings(model="mxbai-embed-large", prompt=query)["embedding"]
         # print("------ Generating Response ------") 
