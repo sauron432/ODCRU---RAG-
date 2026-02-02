@@ -6,7 +6,7 @@ def search(query, collection, threshold = 0.8):
     default_message = "The query provided is out of context of my knowledge base. I don't have enough information to answer this."    
     try:
         query_embedding = ollama.embeddings(model="mxbai-embed-large", prompt=query)["embedding"]
-        print("------ Generating Response ------") 
+        # print("------ Generating Response ------") 
         
     except Exception as e:
         print(f"Errpr embedding query: {e}")
@@ -30,7 +30,7 @@ def search(query, collection, threshold = 0.8):
     if best_response["score"] > threshold:
         return default_message
     
-    return best_response
+    return best_response 
     # return threshold
     # return f" Answer:{all_chunks[best_index]['text']} \n Airline: {all_chunks[best_index]['airline']} \n Score: {float(cos[best_index])} " 
 
