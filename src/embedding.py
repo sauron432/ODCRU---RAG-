@@ -6,7 +6,7 @@ from src.config import MODEL
 
 def get_embeddings(text_list) -> np.ndarray:
     
-    print("------ Creating Embeddings ------")
+    # print("------ Creating Embeddings ------")
     embeddings = []
     texts = [c["text"] for c in text_list]
     for text in texts:

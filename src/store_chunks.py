@@ -1,10 +1,11 @@
+from src.config import *
 import ollama
 
 def store_chunks(all_chunks, collection):
     for i, chunk in enumerate(all_chunks):
         try:
             embedding = ollama.embeddings(
-                model="mxbai-embed-large",
+                model=MODEL,
                 prompt=chunk["text"]
             )["embedding"]
 

@@ -1,6 +1,6 @@
 # from langchain.memory import ConversationBufferMemory
 # from langchain_core.messages import HumanMessage, AIMessage
-from langchain_core.runnables import RunnableLambda
+from langchain_core.runnables import RunnableLambda, RunnablePassthrough
 from langchain_ollama import ChatOllama
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
@@ -22,15 +22,18 @@ def main():
     store_chunks_if_empty(all_chunks, collection)
     # Prompt engineering 
     prompt = ChatPromptTemplate.from_messages([
-        ("system", "You are an expert in answering question about airlines reviews. Answer the queries using the provided reviews."),
-        ("system", "Reviews:\n{reviews}"),
+        (
+        "system","""You are an assistant that answers questions ONLY using airline reviews.
+        If the answer is not explicitly supported by the provided reviews or chat history,respond with a brief refusal.
+        Do not comment on whether a previous answer was correct or incorrect.
+        Do not guess, paraphrase missing information, or explain past mistakes."""),
         MessagesPlaceholder("chat_history"),
-        ("human", "{input}")
+        ("human","Here are the airline reviews:\n{reviews}\n\nUser question:\n{input}")
     ])
     # LLM initialization 
     llm = ChatOllama(
-        model="llama3.2",
-        temperature=0.2
+        model=LLM_MODEL,
+        temperature = TEMP
     )
     # For history storing 
     store = {}
@@ -44,8 +47,7 @@ def main():
             "input": input_extractor,
             "chat_history": history_extractor,
         }
-        | prompt
-        | llm
+        | prompt | llm
     )
     conversational_chain = RunnableWithMessageHistory(
         rag_chain,
@@ -54,7 +56,6 @@ def main():
         history_messages_key="chat_history",
     )
     # Main chat loop
-    session_id = "default-user"
     print("\nConversational RAG chatbot ready. Type 'exit' to quit.")
     while True:
         user_query = input("\nUser: ")
@@ -63,7 +64,7 @@ def main():
         user_query = preprocess_query(user_query)
         response = conversational_chain.invoke(
             {"input": user_query},
-            config={"configurable": {"session_id": session_id}}
+            config={"configurable": {"session_id": USER}}
         )
         print("\nAssistant:", response.content)
 

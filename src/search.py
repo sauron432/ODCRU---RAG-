@@ -13,25 +13,23 @@ def search(query, collection, threshold = 0.8):
         
     results = collection.query(
     query_embeddings=[query_embedding],
-    n_results = 3
+    n_results = 5
     )
     
     responses = [
         {
             "text": results["documents"][0][i],
-            "airline": results["metadatas"][0][i]["airline"],
-            "score": results["distances"][0][i]
+            "airline": results["metadatas"][0][i]["airline"]
+            # "score": results["distances"][0][i]
         } 
         for i in range(len(results["documents"][0]))
     ]
-    
-    best_response = min(responses, key=lambda x: x["score"])
-    
-    if best_response["score"] > threshold:
-        return default_message
-    
-    return best_response 
+    # best_response = min(responses, key=lambda x: x["score"])
+    # if best_response["score"] > threshold:
+    #     return default_message
+    # return best_response['text']
+    return responses
     # return threshold
-    # return f" Answer:{all_chunks[best_index]['text']} \n Airline: {all_chunks[best_index]['airline']} \n Score: {float(cos[best_index])} " 
+    # return f"Review:{responses[0]['text']} \n Airline: {responses[0]['airline']} " 
 
 

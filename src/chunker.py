@@ -1,13 +1,10 @@
 import pandas as pd
-from typing import List
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 from src.config import *
 
-# df_path = "../data/airlines_reviews.csv"
-# text_column = "Reviews"
 def create_chunks(df_path, text_column):
-    print("------ Creating chunks ------")
+    # print("------ Creating chunks ------")
     all_chunks = []
     chunks = []
     df = pd.read_csv(df_path)
@@ -16,8 +13,8 @@ def create_chunks(df_path, text_column):
         raise ValueError(f"Column '{text_column}' not found in DataFrame. Available columns: {list(df.columns)}")
     
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size = 500,
-        chunk_overlap = 100)
+        chunk_size = CHUNK_SIZE,
+        chunk_overlap = OVERLAP_SIZE)
     # reviews = df[text_column]
     # print(reviews)
     for _, row in df.iterrows():
@@ -30,4 +27,4 @@ def create_chunks(df_path, text_column):
                 "airline":airline
             })
     print(f"Total chunks: {len(all_chunks)}")
-    return all_chunks[:1875]
+    return all_chunks
