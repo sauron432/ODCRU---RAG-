@@ -27,8 +27,7 @@ project-root/
 │   ├── vectorDB.py            # Vector DB creation & persistence
 │   ├── preprocess_query.py    # Query cleaning/preprocessing
 │   ├── check_for_chunks.py    # Ensures chunks exist before search
-│   ├── store_chunks.py        # Stores chunks in vectorDB
-│   ├── embeddings.py          # Create embeddings from the chunks     
+│   ├── store_chunks.py        # Stores chunks in vectorDB 
 │   └── config.py              # Global config & constants
 ├── data/
 │   └── airlines_reviews.csv   # Original airline reviews
